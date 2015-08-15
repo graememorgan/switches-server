@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Switch control</title>
+    <script src="static/jquery.min.js"></script>
+    <script src="static/jquery.editable.js"></script>
+    <script src="static/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <table>
+      <tbody>
+      {% for switch in switches %}
+        <tr>
+          <td><input type="checkbox" class="checkbox" {% if switch.state == 1 %}checked{% endif %} id="switch-{{ switch.id }}" data-id="{{ switch.id }}"/><label for="switch-{{ switch.id }}"></label></td>
+          <td><span class="name" data-id="{{ switch.id }}">{% if switch.name == "" %} {{ switch.id }} {% else %} {{ switch.name }} {% endif %}</span> <span class="hide" data-id="{{ switch.id }}">x</span></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p>Show:
+      <select id="show">
+        <option value="" selected></option>
+        {% for switch in hidden %}
+        <option value="{{ switch.id }}">{{ switch.name }} ({{ switch.id }})</option>
+        {% endfor %}
+      </select>
+    </p>
+  </body>
+</html>
+

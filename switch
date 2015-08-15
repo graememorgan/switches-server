@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import requests, getopt, sys
+
+# default hostname and port
+hostname = "localhost"
+port = "5000"
+
+usage = "Usage: " + sys.argv[0] + """ [--address=HOSTNAME] [--port=PORT] get/set <id/name> <1/0>"""
+
+if __name__ == "__main__":
+	try:
+		opts, args = getopt.getopt(sys.argv[1:], "ha:p:", ["address=", "port="])
+	except:
+		print usage
+		sys.exit(1)
+	if len(args) == 0:
+		print usage
+		sys.exit(1)
+	for opt, arg in opts:
+		if opt in ("-h"):
+			print usage
+			sys.exit(0)
+		if opt in ("-a", "--address"):
+			hostname = arg
+		if opt in ("-p", "--port"):
+			port = int(arg)
+	
+	if args[0] == "set":
+		switch = args[1]
+		state = args[2]
+		requests.post("http://%s:%s/switch/%s" % (hostname, port, switch), data = {"state": state})
+	
+	if args[0] == "get":
+		switch = args[1]
+		r = requests.get("http://%s:%s/switch/%s" % (hostname, port, switch))
+		print r.text
+
