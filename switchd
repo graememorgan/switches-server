@@ -6,7 +6,7 @@ import time
 from flask import *
 import sqlite3
 
-DATABASE = "/home/graeme/codes/pyswitches/switches.db"
+DATABASE = "PATH/TO/switches.db"
 
 def connect_db():
   return sqlite3.connect(DATABASE)
